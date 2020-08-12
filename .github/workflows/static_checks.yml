@@ -38,6 +38,21 @@ jobs:
       run: |
         echo "$GITCOOKIE_SH" | bash
         bin/fmt
+  proto_diff:
+    name: Proto diff
+    runs-on: ubuntu-18.04
+    container:
+      image: golang:1.13.4
+    steps:
+      - name: Checkout code
+        # actions/checkout@v2
+        uses: actions/checkout@722adc6
+      - name: Diff proto files
+        env:
+          GITCOOKIE_SH: ${{ secrets.GITCOOKIE_SH }}
+        run: |
+          echo "$GITCOOKIE_SH" | bash
+          bin/protoc-diff
   shellcheck:
     name: shellcheck
     runs-on: ubuntu-18.04
